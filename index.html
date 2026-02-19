@@ -342,7 +342,7 @@
 
             <h1 class="reveal text-4xl md:text-6xl font-black tracking-tight leading-[1.1] text-white mb-6"
                 style="transition-delay:0.1s">
-                Soluções de automações e inteligência artificial vão&nbsp;
+                Soluções de automações e inteligência artificial que vão&nbsp;
                 <span style="color:#B8DC00">economizar tempo e dinheiro</span>
                 &nbsp;no seu negócio.
             </h1>
@@ -622,6 +622,7 @@
     ========================================================= -->
     <section id="projetos" class="py-24 px-6 bg-surface border-t border-[#1a1a1a]" x-data="{
             filter: 'Todos',
+            swiperInstance: null,
             projects: [
                 {
                     id:1, name:'Memodonto', category:'SaaS', tags:['EdTech','Supabase'],
@@ -658,7 +659,11 @@
                 this.selectedProject = p;
                 this.modalOpen = true;
                 this.$nextTick(() => {
-                    new Swiper('#modal-swiper', {
+                    if (this.swiperInstance) {
+                        this.swiperInstance.destroy(true, true);
+                        this.swiperInstance = null;
+                    }
+                    this.swiperInstance = new Swiper('#modal-swiper', {
                         pagination: { el: '.swiper-pagination', clickable: true },
                         loop: p.images.length > 1
                     });
