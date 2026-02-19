@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System Light — Simple Variant</title>
+
+    <script src="templates/digital-architect.aura.build/resource_3fa48481346f.js"></script>
+    <script src="templates/digital-architect.aura.build/iconify-icon_d39ffc6e4c56.js"></script>
+    <link href="templates/digital-architect.aura.build/css2_19fd9cc6b396.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=DM+Serif+Display&display=swap"
+        rel="stylesheet">
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #FAFAF8;
+            --surface: #FFFFFF;
+            --elevated: #F5F3EF;
+            --border: #E8E4DD;
+            --border-hover: #D4CFC6;
+            --muted: #A39E93;
+            --secondary: #7A7567;
+            --primary: #2C2A25;
+            --black: #1A1816;
+            --accent: #ff9221;
+            --accent-hover: #e8820e;
+            --accent-soft: #FFF5EB;
+            --warm: #D4A574;
+            --brown: #8B7355;
+            --success: #4AA86C;
+            --error: #D64545;
+            --info: #4A8AD6;
+            --radius-sm: 6px;
+            --radius: 10px;
+            --radius-lg: 16px;
+            --radius-pill: 999px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* ── ANIMATIONS ────────────────────── */
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideRight {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(1.5rem);
+            transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── NAV ─────────────────────────── */
+
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(250, 250, 248, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.75rem 2rem;
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-logo {
+            font-weight: 800;
+            font-size: 0.875rem;
+            color: var(--accent);
+            letter-spacing: -0.02em;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            color: var(--muted);
+            font-weight: 500;
+            font-size: 0.8125rem;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-bar a:hover {
+            color: var(--primary);
+        }
+
+        .nav-dot {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: var(--border);
+        }
+
+        /* ── SECTIONS ────────────────────── */
+
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section:first-of-type {
+            margin-top: 3.5rem;
+        }
+
+        .section-label {
+            font-size: 0.6875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--muted);
+            margin-bottom: 3rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-label::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ── BUTTONS ─────────────────────── */
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            padding: 0.6875rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.8125rem;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.2s, transform 0.15s;
+            font-family: inherit;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--primary);
+            padding: 0.6875rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 500;
+            font-size: 0.8125rem;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+            font-family: inherit;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+            transform: translateY(-1px);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--accent);
+            padding: 0.6875rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 500;
+            font-size: 0.8125rem;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.2s;
+            font-family: inherit;
+        }
+
+        .btn-ghost:hover {
+            background: var(--accent-soft);
+        }
+
+        .btn-pill {
+            background: var(--primary);
+            color: var(--bg);
+            padding: 0.6875rem 1.75rem;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 0.8125rem;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: opacity 0.2s, transform 0.15s;
+            font-family: inherit;
+        }
+
+        .btn-pill:hover {
+            opacity: 0.85;
+            transform: translateY(-1px);
+        }
+
+        /* ── CARDS ────────────────────────── */
+
+        .card-simple {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            transition: border-color 0.25s, box-shadow 0.25s;
+        }
+
+        .card-simple:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .card-warm {
+            background: var(--elevated);
+            border: none;
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            transition: box-shadow 0.25s;
+        }
+
+        .card-warm:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-accent {
+            background: var(--accent-soft);
+            border: 1px solid rgba(255, 146, 33, 0.15);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            transition: border-color 0.25s;
+        }
+
+        .card-accent:hover {
+            border-color: var(--accent);
+        }
+
+        .card-outline {
+            background: transparent;
+            border: 1.5px dashed var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            transition: border-color 0.25s;
+        }
+
+        .card-outline:hover {
+            border-color: var(--accent);
+        }
+
+        /* ── BADGES ───────────────────────── */
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.6875rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .badge-accent {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+
+        .badge-neutral {
+            background: var(--elevated);
+            color: var(--secondary);
+        }
+
+        .badge-success {
+            background: #EEFBF2;
+            color: var(--success);
+        }
+
+        .badge-error {
+            background: #FFF0F0;
+            color: var(--error);
+        }
+
+        .badge-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        /* ── INPUTS ──────────────────────── */
+
+        .input-field {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+            font-size: 0.875rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            color: var(--primary);
+        }
+
+        .input-field::placeholder {
+            color: var(--muted);
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        /* Label */
+        .field-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.375rem;
+            color: var(--secondary);
+        }
+
+        /* ── TYPOGRAPHY ──────────────────── */
+
+        .type-spec {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .type-row {
+            display: grid;
+            grid-template-columns: 140px 1fr auto;
+            align-items: baseline;
+            gap: 2rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .type-label {
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .type-detail {
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-family: 'JetBrains Mono', monospace;
+            white-space: nowrap;
+        }
+
+        /* ── COLOR GRID ──────────────────── */
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .color-swatch {
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--surface);
+        }
+
+        .color-preview {
+            height: 72px;
+            width: 100%;
+        }
+
+        .color-info {
+            padding: 0.625rem;
+        }
+
+        .color-name {
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: var(--primary);
+            margin-bottom: 2px;
+        }
+
+        .color-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.625rem;
+            color: var(--muted);
+        }
+
+        /* ── STATES ──────────────────────── */
+
+        .states-row {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .state-label {
+            font-size: 0.6875rem;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-weight: 600;
+        }
+
+        /* ── ICON GRID ───────────────────── */
+
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 1rem 0.5rem;
+            border-radius: var(--radius);
+            color: var(--secondary);
+            transition: background 0.2s, color 0.2s;
+            cursor: default;
+        }
+
+        .icon-item:hover {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+
+        .icon-label {
+            font-size: 0.625rem;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        /* ── MOTION ───────────────────────── */
+
+        .motion-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .motion-card {
+            padding: 1.5rem 1rem;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .motion-demo {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: var(--radius-sm);
+            margin: 0 auto 0.875rem;
+        }
+
+        .motion-name {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 2px;
+        }
+
+        .motion-desc {
+            font-size: 0.6875rem;
+            color: var(--muted);
+        }
+
+        /* ── MARQUEE ──────────────────────── */
+
+        .marquee-track {
+            overflow: hidden;
+            padding: 1.25rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .marquee-content {
+            display: flex;
+            gap: 2.5rem;
+            animation: marquee 25s linear infinite;
+            white-space: nowrap;
+            width: max-content;
+        }
+
+        .marquee-item {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.25rem;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .marquee-item .dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex-shrink: 0;
+        }
+
+        /* ── LAYOUT DEMOS ────────────────── */
+
+        .layout-box {
+            padding: 1rem;
+            background: var(--elevated);
+            border-radius: var(--radius);
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* ── DIVIDER ─────────────────────── */
+
+        .divider {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ── TRAVEL ROUTE ─────────────────── */
+
+        .travel-route {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .travel-route::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 60px;
+            right: 60px;
+            height: 2px;
+            border-top: 2px dashed var(--border);
+            z-index: 0;
+        }
+
+        .route-point {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            flex: 1;
+        }
+
+        .route-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+
+        .route-dot.empty {
+            background: white;
+            box-shadow: 0 0 0 2px var(--border);
+        }
+
+        .route-label {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-top: 0.25rem;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        .float-icon {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* ── RESPONSIVE ──────────────────── */
+
+        @media (max-width: 768px) {
+            .type-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .nav-inner {
+                flex-wrap: wrap;
+                gap: 0.75rem;
+            }
+
+            section {
+                padding: 3.5rem 1.5rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem !important;
+            }
+
+            .hero-sub {
+                font-size: 0.9rem !important;
+            }
+
+            .travel-route {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ─── NAV ──────────────────────────── -->
+    <div class="nav-bar">
+        <div class="nav-inner">
+            <span class="nav-logo"><iconify-icon icon="solar:airplane-bold" width="14"
+                    style="vertical-align: -1px;"></iconify-icon> DS / Viajante</span>
+            <div class="nav-dot"></div>
+            <a href="#hero">Hero</a>
+            <a href="#typography">Type</a>
+            <a href="#colors">Colors</a>
+            <a href="#components">Components</a>
+            <a href="#layout">Layout</a>
+            <a href="#motion">Motion</a>
+            <a href="#icons">Icons</a>
+        </div>
+    </div>
+
+    <!-- ─── HERO ─────────────────────────── -->
+    <section id="hero" style="min-height: 92vh; display: flex; flex-direction: column; justify-content: center;">
+        <div style="max-width: 680px;">
+            <div class="reveal" style="margin-bottom: 1.25rem;">
+                <span class="badge badge-accent">
+                    <iconify-icon icon="solar:compass-bold" width="12"></iconify-icon>
+                    O Segredo do Viajante
+                </span>
+                <span class="badge badge-neutral">Light Variant</span>
+            </div>
+            <div class="reveal" style="transition-delay: 0.08s;">
+                <h1 class="hero-title"
+                    style="font-size: 3.75rem; font-weight: 900; line-height: 1.05; letter-spacing: -0.035em; color: var(--black); margin-bottom: 1.25rem;">
+                    Explore, create<br>
+                    <span style="color: var(--accent);">& go.</span>
+                </h1>
+            </div>
+            <div class="reveal" style="transition-delay: 0.16s;">
+                <p class="hero-sub"
+                    style="font-size: 1.0625rem; line-height: 1.7; color: var(--secondary); margin-bottom: 2rem; max-width: 480px;">
+                    Um design system leve e acolhedor para quem viaja e cria. Cores quentes, tipografia honesta e componentes que funcionam — sem excessos.
+                </p>
+            </div>
+            <div class="reveal" style="display: flex; gap: 0.75rem; flex-wrap: wrap; transition-delay: 0.24s;">
+                <button class="btn-primary">
+                    <iconify-icon icon="solar:map-bold" width="15"></iconify-icon>
+                    Explorar sistema
+                </button>
+                <button class="btn-secondary"><iconify-icon icon="solar:compass-linear" width="15"></iconify-icon> Documentação</button>
+                <button class="btn-ghost">Ver paleta →</button>
+            </div>
+        </div>
+
+        <!-- Travel Route -->
+        <div class="reveal travel-route" style="transition-delay: 0.35s;">
+            <div class="route-point">
+                <div class="route-dot"></div>
+                <div class="route-label">GRU</div>
+            </div>
+            <div class="route-point">
+                <div class="route-dot empty"></div>
+                <div class="route-label">LIS</div>
+            </div>
+            <div class="route-point">
+                <div class="route-dot empty"></div>
+                <div class="route-label">CDG</div>
+            </div>
+            <div class="route-point">
+                <div class="route-dot"></div>
+                <div class="route-label">FCO</div>
+            </div>
+        </div>
+
+        <!-- Feature pills -->
+        <div class="reveal"
+            style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 2rem; transition-delay: 0.45s;">
+            <span class="badge badge-neutral"><iconify-icon icon="solar:airplane-linear" width="11"></iconify-icon> Viajante</span>
+            <span class="badge badge-neutral">#ff9221</span>
+            <span class="badge badge-neutral">Warm Neutrals</span>
+            <span class="badge badge-neutral">Inter</span>
+            <span class="badge badge-neutral">Solar Icons</span>
+            <span class="badge badge-neutral">Responsive</span>
+        </div>
+    </section>
+
+    <!-- ─── MARQUEE ──────────────────────── -->
+    <div class="marquee-track reveal">
+        <div class="marquee-content">
+            <span class="marquee-item"><span class="dot"></span> Lisboa</span>
+            <span class="marquee-item"><span class="dot"></span> Paris</span>
+            <span class="marquee-item"><span class="dot"></span> Roma</span>
+            <span class="marquee-item"><span class="dot"></span> Tóquio</span>
+            <span class="marquee-item"><span class="dot"></span> Nova York</span>
+            <span class="marquee-item"><span class="dot"></span> Barcelona</span>
+            <span class="marquee-item"><span class="dot"></span> Santorini</span>
+            <span class="marquee-item"><span class="dot"></span> Bangkok</span>
+            <span class="marquee-item"><span class="dot"></span> Lisboa</span>
+            <span class="marquee-item"><span class="dot"></span> Paris</span>
+            <span class="marquee-item"><span class="dot"></span> Roma</span>
+            <span class="marquee-item"><span class="dot"></span> Tóquio</span>
+        </div>
+    </div>
+
+    <!-- ─── TYPOGRAPHY ───────────────────── -->
+    <section id="typography">
+        <div class="section-label reveal">01 — Typography</div>
+
+        <div class="type-spec">
+            <div class="type-row reveal">
+                <div class="type-label">Display</div>
+                <h1
+                    style="font-size: 3.75rem; font-weight: 900; line-height: 1.05; letter-spacing: -0.035em; color: var(--black);">
+                    Big & bold
+                </h1>
+                <div class="type-detail">60px / 63px</div>
+            </div>
+            <div class="type-row reveal">
+                <div class="type-label">Heading 1</div>
+                <h1
+                    style="font-size: 2.5rem; font-weight: 800; line-height: 1.15; letter-spacing: -0.025em; color: var(--black);">
+                    Section title
+                </h1>
+                <div class="type-detail">40px / 46px</div>
+            </div>
+            <div class="type-row reveal">
+                <div class="type-label">Heading 2</div>
+                <h2
+                    style="font-size: 1.5rem; font-weight: 700; line-height: 1.25; letter-spacing: -0.015em; color: var(--black);">
+                    Component heading
+                </h2>
+                <div class="type-detail">24px / 30px</div>
+            </div>
+            <div class="type-row reveal">
+                <div class="type-label">Heading 3</div>
+                <h3 style="font-size: 1.125rem; font-weight: 600; line-height: 1.35; color: var(--primary);">
+                    Sub-section title
+                </h3>
+                <div class="type-detail">18px / 24px</div>
+            </div>
+            <div class="type-row reveal">
+                <div class="type-label">Body</div>
+                <p style="font-size: 1rem; line-height: 1.7; color: var(--primary);">
+                    Standard body text used across the interface for content, descriptions, and long-form reading.
+                </p>
+                <div class="type-detail">16px / 27px</div>
+            </div>
+            <div class="type-row reveal">
+                <div class="type-label">Small</div>
+                <p style="font-size: 0.875rem; line-height: 1.5; color: var(--secondary);">
+                    Secondary text for labels, captions, and supporting information that stays out of the way.
+                </p>
+                <div class="type-detail">14px / 21px</div>
+            </div>
+            <div class="type-row reveal">
+                <div class="type-label">Caption</div>
+                <p style="font-size: 0.75rem; line-height: 1.5; color: var(--muted);">
+                    Fine print, metadata, timestamps — smallest readable text
+                </p>
+                <div class="type-detail">12px / 18px</div>
+            </div>
+            <div class="type-row reveal" style="border-bottom: none;">
+                <div class="type-label">Mono</div>
+                <code
+                    style="font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; background: var(--elevated); padding: 0.25rem 0.625rem; border-radius: var(--radius-sm); color: var(--accent); border: 1px solid var(--border);">
+                    const variant = "light-simple";
+                </code>
+                <div class="type-detail">13px / 20px</div>
+            </div>
+        </div>
+
+        <!-- Serif accent -->
+        <div class="reveal"
+            style="margin-top: 3rem; padding: 2rem; background: var(--elevated); border-radius: var(--radius-lg); text-align: center;">
+            <p
+                style="font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--brown); letter-spacing: -0.01em;">
+                “The world is a book and those who do not travel read only one page.”
+            </p>
+            <p
+                style="font-size: 0.75rem; color: var(--muted); margin-top: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em;">
+                — Santo Agostinho</p>
+        </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ─── COLORS ───────────────────────── -->
+    <section id="colors">
+        <div class="section-label reveal">02 — Colors</div>
+
+        <div class="reveal" style="margin-bottom: 3rem;">
+            <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 1.25rem; color: var(--black);">Warm
+                Neutrals</h3>
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #FAFAF8;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Background</div>
+                        <div class="color-value">#FAFAF8</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #FFFFFF; border-bottom: 1px solid #E8E4DD;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Surface</div>
+                        <div class="color-value">#FFFFFF</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #F5F3EF;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Elevated</div>
+                        <div class="color-value">#F5F3EF</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #E8E4DD;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Border</div>
+                        <div class="color-value">#E8E4DD</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #D4CFC6;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Border Hover</div>
+                        <div class="color-value">#D4CFC6</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #A39E93;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Muted</div>
+                        <div class="color-value">#A39E93</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #7A7567;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Secondary</div>
+                        <div class="color-value">#7A7567</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #2C2A25;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Primary</div>
+                        <div class="color-value">#2C2A25</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #1A1816;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Black</div>
+                        <div class="color-value">#1A1816</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="reveal" style="margin-bottom: 3rem;">
+            <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 1.25rem; color: var(--black);">Accent &
+                Traveler</h3>
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #ff9221;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Accent</div>
+                        <div class="color-value">#ff9221</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #e8820e;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Accent Hover</div>
+                        <div class="color-value">#e8820e</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #FFF5EB;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Accent Soft</div>
+                        <div class="color-value">#FFF5EB</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #D4A574;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Warm Sand</div>
+                        <div class="color-value">#D4A574</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #8B7355;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Brown</div>
+                        <div class="color-value">#8B7355</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="reveal">
+            <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 1.25rem; color: var(--black);">Status</h3>
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #4AA86C;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Success</div>
+                        <div class="color-value">#4AA86C</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #D64545;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Error</div>
+                        <div class="color-value">#D64545</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #4A8AD6;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Info</div>
+                        <div class="color-value">#4A8AD6</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ─── COMPONENTS ───────────────────── -->
+    <section id="components">
+        <div class="section-label reveal">03 — Components</div>
+
+        <!-- Buttons -->
+        <div class="reveal" style="margin-bottom: 3.5rem;">
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--black);">Buttons</h3>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div>
+                    <div class="state-label">Primary</div>
+                    <div class="states-row">
+                        <button class="btn-primary">Action</button>
+                        <button class="btn-primary">With Icon <iconify-icon icon="solar:arrow-right-linear"
+                                width="15"></iconify-icon></button>
+                    </div>
+                </div>
+                <div>
+                    <div class="state-label">Secondary</div>
+                    <div class="states-row">
+                        <button class="btn-secondary">Outline</button>
+                        <button class="btn-secondary"><iconify-icon icon="solar:code-linear" width="15"></iconify-icon>
+                            Code</button>
+                    </div>
+                </div>
+                <div>
+                    <div class="state-label">Ghost</div>
+                    <div class="states-row">
+                        <button class="btn-ghost">Text only</button>
+                        <button class="btn-ghost">Link →</button>
+                    </div>
+                </div>
+                <div>
+                    <div class="state-label">Pill / Dark</div>
+                    <div class="states-row">
+                        <button class="btn-pill">Subscribe</button>
+                        <button class="btn-pill"><iconify-icon icon="solar:star-bold" width="14"></iconify-icon>
+                            Star</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Badges -->
+        <div class="reveal" style="margin-bottom: 3.5rem;">
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--black);">Badges</h3>
+            <div class="states-row">
+                <span class="badge badge-accent"><span class="badge-dot"></span> Active</span>
+                <span class="badge badge-neutral">Default</span>
+                <span class="badge badge-success"><span class="badge-dot"></span> Online</span>
+                <span class="badge badge-error"><span class="badge-dot"></span> Offline</span>
+            </div>
+        </div>
+
+        <!-- Cards -->
+        <div class="reveal" style="margin-bottom: 3.5rem;">
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--black);">Cards</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
+                <div class="card-simple">
+                    <iconify-icon icon="solar:suitcase-tag-bold" width="26"
+                        style="color: var(--accent); margin-bottom: 0.75rem;"></iconify-icon>
+                    <h4 style="font-size: 0.9375rem; font-weight: 600; margin-bottom: 0.25rem;">Mala de Viagem</h4>
+                    <p style="font-size: 0.8125rem; color: var(--secondary);">Card com borda quente</p>
+                </div>
+                <div class="card-warm">
+                    <iconify-icon icon="solar:compass-bold" width="26"
+                        style="color: var(--brown); margin-bottom: 0.75rem;"></iconify-icon>
+                    <h4 style="font-size: 0.9375rem; font-weight: 600; margin-bottom: 0.25rem;">Destinos</h4>
+                    <p style="font-size: 0.8125rem; color: var(--secondary);">Fundo elevado, sem borda</p>
+                </div>
+                <div class="card-accent">
+                    <iconify-icon icon="solar:airplane-bold" width="26"
+                        style="color: var(--accent); margin-bottom: 0.75rem;"></iconify-icon>
+                    <h4 style="font-size: 0.9375rem; font-weight: 600; margin-bottom: 0.25rem;">Passagem</h4>
+                    <p style="font-size: 0.8125rem; color: var(--secondary);">Tint laranja de fundo</p>
+                </div>
+                <div class="card-outline">
+                    <iconify-icon icon="solar:map-bold" width="26"
+                        style="color: var(--muted); margin-bottom: 0.75rem;"></iconify-icon>
+                    <h4 style="font-size: 0.9375rem; font-weight: 600; margin-bottom: 0.25rem;">Roteiro</h4>
+                    <p style="font-size: 0.8125rem; color: var(--secondary);">Borda tracejada, transparente</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inputs -->
+        <div class="reveal">
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--black);">Form Elements
+            </h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                <div>
+                    <label class="field-label">Name</label>
+                    <input type="text" class="input-field" placeholder="Enter your name">
+                </div>
+                <div>
+                    <label class="field-label">Email</label>
+                    <input type="email" class="input-field" placeholder="you@example.com">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ─── LAYOUT ───────────────────────── -->
+    <section id="layout">
+        <div class="section-label reveal">04 — Layout</div>
+
+        <div class="reveal" style="margin-bottom: 2.5rem;">
+            <div class="state-label" style="margin-bottom: 0.75rem;">Two columns</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                <div class="layout-box">col 1</div>
+                <div class="layout-box">col 2</div>
+            </div>
+        </div>
+
+        <div class="reveal" style="margin-bottom: 2.5rem;">
+            <div class="state-label" style="margin-bottom: 0.75rem;">Three columns</div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem;">
+                <div class="layout-box">col 1</div>
+                <div class="layout-box">col 2</div>
+                <div class="layout-box">col 3</div>
+            </div>
+        </div>
+
+        <div class="reveal" style="margin-bottom: 2.5rem;">
+            <div class="state-label" style="margin-bottom: 0.75rem;">Sidebar + Content</div>
+            <div style="display: grid; grid-template-columns: 240px 1fr; gap: 0.75rem;">
+                <div class="layout-box">sidebar</div>
+                <div class="layout-box" style="min-height: 120px;">main content</div>
+            </div>
+        </div>
+
+        <div class="reveal">
+            <div class="state-label" style="margin-bottom: 0.75rem;">Auto-fit responsive</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.75rem;">
+                <div class="layout-box">1</div>
+                <div class="layout-box">2</div>
+                <div class="layout-box">3</div>
+                <div class="layout-box">4</div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ─── MOTION ───────────────────────── -->
+    <section id="motion">
+        <div class="section-label reveal">05 — Motion</div>
+
+        <div class="reveal">
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--black);">Animations
+            </h3>
+            <div class="motion-gallery">
+                <div class="motion-card">
+                    <div class="motion-demo" style="animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) forwards;"></div>
+                    <div class="motion-name">fadeUp</div>
+                    <div class="motion-desc">Translate + fade in</div>
+                </div>
+                <div class="motion-card">
+                    <div class="motion-demo" style="animation: scaleIn 0.6s ease forwards;"></div>
+                    <div class="motion-name">scaleIn</div>
+                    <div class="motion-desc">Scale from 96%</div>
+                </div>
+                <div class="motion-card">
+                    <div class="motion-demo" style="animation: slideRight 0.7s ease forwards;"></div>
+                    <div class="motion-name">slideRight</div>
+                    <div class="motion-desc">Translate X entrance</div>
+                </div>
+                <div class="motion-card">
+                    <div class="motion-demo"
+                        style="animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) forwards; animation-delay: 0.25s; opacity: 0;">
+                    </div>
+                    <div class="motion-name">staggered</div>
+                    <div class="motion-desc">Delayed entrance</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ─── ICONS ────────────────────────── -->
+    <section id="icons" style="padding-bottom: 6rem;">
+        <div class="section-label reveal">06 — Icons</div>
+
+        <div class="reveal">
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--black);">Solar Icons
+            </h3>
+            <div class="icon-grid">
+                <div class="icon-item"><iconify-icon icon="solar:map-bold" width="26"></iconify-icon>
+                    <div class="icon-label">map</div>
+                </div>
+                <div class="icon-item"><iconify-icon icon="solar:compass-bold" width="26"></iconify-icon>
+                    <div class="icon-label">compass</div>
+                </div>
+                <div class="icon-item"><iconify-icon icon="solar:global-bold" width="26"></iconify-icon>
+                    <div class="icon-label">global</div>
+                </div>
+                <div class="icon-item"><iconify-icon icon="solar:suitcase-tag-bold" width="26"></iconify-icon>
+                    <div class="icon-label">suitcase</div>
+                </div>
+                <div class="icon-item"><iconify-icon icon="solar:star-bold" width="26"></iconify-icon>
+                    <div class="icon-label">star</div>
+                </div>
+                <div class="icon-item"><iconify-icon icon="solar:heart-bold" width="26"></iconify-icon>
+                    <div class="icon-label">heart</div>
+                </div>
+                <div class="icon-item"><iconify-icon icon="solar:camera-bold" width="26"></iconify-icon>
+                    <div class="icon-label">camera</div>
+                </div>
+                <div class="icon-item"><iconify-icon icon="solar:settings-bold" width="26"></iconify-icon>
+                    <div class="icon-label">settings</div>
+                </div>
+                <div class="icon-item"><iconify-icon icon="solar:code-bold" width="26"></iconify-icon>
+                    <div class="icon-label">code</div>
+                </div>
+                <div class="icon-item"><iconify-icon icon="solar:user-bold" width="26"></iconify-icon>
+                    <div class="icon-label">user</div>
+                </div>
+                <div class="icon-item"><iconify-icon icon="solar:layers-bold" width="26"></iconify-icon>
+                    <div class="icon-label">layers</div>
+                </div>
+                <div class="icon-item"><iconify-icon icon="solar:notification-unread-bold" width="26"></iconify-icon>
+                    <div class="icon-label">notif</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── FOOTER ───────────────────────── -->
+    <footer style="text-align: center; padding: 2rem; border-top: 1px solid var(--border);">
+        <p style="font-size: 0.75rem; color: var(--muted);">
+            Design System — O Segredo do Viajante · Light Variant · #ff9221
+        </p>
+    </footer>
+
+    <script>
+        // Reveal on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+        }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Smooth scroll
+        document.querySelectorAll('.nav-bar a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                const t = document.querySelector(a.getAttribute('href'));
+                if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+
+</html>

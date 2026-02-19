@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Design system drafts & assets backup
+assets/
+
+# Editor
+.vscode/
+*.swp
+*.swo

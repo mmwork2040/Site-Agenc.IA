@@ -1,405 +1,843 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<html class="scroll-smooth" lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artools Precision Series | A Caneta Mais Tecnológica</title>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Agenc.IA | Automações com Inteligência Artificial</title>
+    <meta name="description"
+        content="Soluções de automações e inteligência artificial que economizam tempo e dinheiro no seu negócio. Agentes de atendimento, automação de processos, sistemas SaaS e muito mais.">
 
-    <!-- Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 
-    <!-- Tailwind & Iconify (CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-
-    <!-- GSAP + ScrollTrigger (CDN) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
-    <!-- Design System Configuration -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                        display: ['Space Grotesk', 'sans-serif'],
-                    },
                     colors: {
-                        stone: {
-                            50: '#fafaf9',
-                            100: '#f5f5f4',
-                            200: '#e7e5e4',
-                            300: '#d6d3d1',
-                            400: '#a8a29e',
-                            500: '#78716c',
-                            600: '#57534e',
-                            700: '#44403c',
-                            800: '#292524',
-                            900: '#1c1917',
-                        },
-                        'surface-light': '#EAEAE5',
+                        'bg': '#080808',
+                        'surface': '#0F0F0F',
+                        'elevated': '#181818',
+                        'line': '#242424',
+                        'muted': '#6B6B6B',
+                        'secondary': '#A0A0A0',
+                        'accent': '#B8DC00',   /* slightly muted acid green */
                     },
-                    animation: {
-                        'spin-slow': 'spin 8s linear infinite',
-                    }
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
                 }
             }
-        }
+        };
     </script>
 
     <style>
-        /* BASE STYLES & OVERRIDES */
+        :root {
+            --accent-rgb: 184, 220, 0;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
         body {
+            background: #080808;
+            color: #E8E8E8;
             font-family: 'Inter', sans-serif;
-            background-color: #EAEAE5;
-            color: #1C1917;
-            overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
-        /* NOISE GRAIN TEXTURE */
-        .noise {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.04;
-            pointer-events: none;
-            z-index: 9999;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        /* --- GLASSMORPHISM HEADER --- */
+        .glass-header {
+            background: rgba(8, 8, 8, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        /* TEXT OUTLINE EFFECT */
-        .text-outline {
-            -webkit-text-stroke: 1px currentColor;
-            color: transparent;
+        /* --- CARD --- */
+        .card {
+            background: #0F0F0F;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 1.5rem;
+            transition: border-color 0.4s, background 0.4s;
         }
 
-        /* BUTTON BEAM ANIMATION */
-        .btn-beam {
+        .card:hover {
+            border-color: rgba(var(--accent-rgb), 0.25);
+            background: #141414;
+        }
+
+        /* --- ACCENT --- */
+        .accent-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: #B8DC00;
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        /* --- TAG --- */
+        .tag {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #B8DC00;
+        }
+
+        /* --- SHIMMER BUTTON --- */
+        .btn-primary {
             position: relative;
-            z-index: 10;
+            overflow: hidden;
+            background: #B8DC00;
+            color: #000;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.9rem 2.2rem;
+            border-radius: 9999px;
+            transition: background 0.3s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            background: #CAEE10;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -60%;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+            transform: skewX(-20deg);
+        }
+
+        .btn-primary:hover::after {
+            animation: shimmer 1.2s ease-in-out;
+        }
+
+        .btn-ghost {
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.9rem 2.2rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #A0A0A0;
+            transition: border-color 0.3s, color 0.3s;
+        }
+
+        .btn-ghost:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            color: #E8E8E8;
+        }
+
+        /* --- MARQUEE --- */
+        .marquee-wrap {
             overflow: hidden;
         }
 
-        .btn-beam::before {
-            content: "";
-            position: absolute;
-            inset: -2px;
-            z-index: -1;
-            background: conic-gradient(from 90deg at 50% 50%, #E2E8F0 0%, #000000 50%, #E2E8F0 100%);
-            animation: spin 4s linear infinite;
-            border-radius: inherit;
-            opacity: 0;
-            transition: opacity 0.3s;
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee 35s linear infinite;
         }
 
-        .btn-beam:hover::before {
-            opacity: 1;
-        }
-
-        .btn-beam-content {
-            background-color: #1c1917;
-            color: white;
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            height: 100%;
-            border-radius: inherit;
+        /* --- GRID LINE DIVIDER --- */
+        .section-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #6B6B6B;
+            margin-bottom: 1.25rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 0.75rem;
         }
 
-        @keyframes spin {
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* --- REVEAL --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes shimmer {
             from {
-                transform: rotate(0deg);
+                left: -60%;
             }
 
             to {
-                transform: rotate(360deg);
+                left: 120%;
             }
         }
 
-        /* UTILS */
-        .text-balance {
-            text-wrap: balance;
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
         }
 
-        /* CUSTOM SCROLLBAR */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 3px;
         }
 
         ::-webkit-scrollbar-track {
-            background: #EAEAE5;
+            background: #080808;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #d6d3d1;
-            border-radius: 4px;
+            background: #282828;
+            border-radius: 10px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: #a8a29e;
+            background: #B8DC00;
+        }
+
+        [x-cloak] {
+            display: none !important;
+        }
+
+        /* Swiper overrides */
+        .swiper-pagination-bullet-active {
+            background: #B8DC00 !important;
+        }
+
+        .swiper-pagination-bullet {
+            background: #555 !important;
+            opacity: 1 !important;
         }
     </style>
 </head>
 
-<body class="antialiased selection:bg-stone-800 selection:text-white">
+<body x-data="{ mobileOpen: false, modalOpen: false, selectedProject: null }">
 
-    <div class="noise"></div>
-
-    <!-- NAVBAR -->
-    <header
-        class="fixed top-0 w-full z-50 px-6 py-6 transition-all duration-300 pointer-events-none mix-blend-difference text-stone-900 invert">
-        <div class="max-w-[1440px] mx-auto flex justify-between items-center pointer-events-auto">
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-stone-900 text-white flex items-center justify-center rounded-sm">
-                    <iconify-icon icon="solar:cube-bold-duotone" class="text-xl"></iconify-icon>
+    <!-- =========================================================
+         HEADER
+    ========================================================= -->
+    <header class="glass-header fixed top-0 inset-x-0 z-[100]">
+        <div class="max-w-6xl mx-auto px-6 md:px-10 h-[60px] flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2.5">
+                <div class="w-7 h-7 rounded-full bg-accent flex items-center justify-center">
+                    <iconify-icon icon="solar:atom-bold-duotone" class="text-black text-sm"></iconify-icon>
                 </div>
-                <!-- Inverted by mix-blend above, so we keep text standard colors -->
-                <span class="font-display font-medium tracking-tight text-lg text-white">AR<span
-                        class="text-stone-400">TOOLS</span></span>
-            </div>
+                <span class="font-bold text-sm tracking-tight text-white">Agenc<span
+                        style="color:#B8DC00">.IA</span></span>
+            </a>
 
-            <nav class="hidden md:flex items-center gap-8 text-xs font-mono uppercase tracking-widest text-stone-300">
-                <a href="#" class="hover:text-white transition-colors">Technology</a>
-                <a href="#" class="hover:text-white transition-colors">Design</a>
-                <a href="#" class="hover:text-white transition-colors">Specs</a>
+            <!-- Desktop Nav -->
+            <nav
+                class="hidden md:flex items-center gap-8 text-xs font-semibold text-secondary uppercase tracking-widest">
+                <a href="#solucoes" class="hover:text-white transition-colors">Soluções</a>
+                <a href="#sobre" class="hover:text-white transition-colors">Sobre</a>
+                <a href="#projetos" class="hover:text-white transition-colors">Projetos</a>
+                <a href="https://wa.me/5531982964066?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20agendar%20uma%20consultoria"
+                    target="_blank" class="btn-primary">
+                    Falar no WhatsApp
+                </a>
             </nav>
 
-            <button class="hidden md:flex items-center gap-2">
-                <iconify-icon icon="solar:bag-linear" class="text-xl text-white"></iconify-icon>
+            <!-- Mobile toggle -->
+            <button @click="mobileOpen = !mobileOpen" class="md:hidden text-white text-2xl">
+                <iconify-icon
+                    :icon="mobileOpen ? 'solar:close-square-bold' : 'solar:hamburger-menu-bold'"></iconify-icon>
             </button>
+        </div>
+
+        <!-- Mobile menu -->
+        <div x-show="mobileOpen" x-transition.opacity x-cloak
+            class="fixed inset-0 bg-black/95 flex flex-col items-center justify-center gap-10 md:hidden">
+            <a @click="mobileOpen=false" href="#solucoes"
+                class="text-3xl font-black hover:text-[#B8DC00] transition-colors">Soluções</a>
+            <a @click="mobileOpen=false" href="#sobre"
+                class="text-3xl font-black hover:text-[#B8DC00] transition-colors">Sobre</a>
+            <a @click="mobileOpen=false" href="#projetos"
+                class="text-3xl font-black hover:text-[#B8DC00] transition-colors">Projetos</a>
+            <a @click="mobileOpen=false" href="https://wa.me/5531982964066"
+                class="btn-primary text-base px-10 py-4 mt-4">WhatsApp</a>
         </div>
     </header>
 
-    <!-- MAIN SCROLL CONTAINER -->
-    <!-- h-[280vh] defines the scroll distance for the video scrub -->
-    <main class="relative bg-[#EAEAE5]">
 
-        <div id="hero-trigger" class="relative group h-[280vh]">
+    <!-- =========================================================
+         HERO
+    ========================================================= -->
+    <section class="pt-36 pb-24 px-6 relative overflow-hidden">
+        <!-- Subtle glow -->
+        <div
+            class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[radial-gradient(ellipse_at_top,rgba(184,220,0,0.06),transparent_60%)] pointer-events-none">
+        </div>
 
-            <!-- STICKY CONTENT WRAPPER -->
-            <div class="sticky top-0 h-screen w-full overflow-hidden flex flex-col md:flex-row">
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <div class="reveal mb-6 flex justify-center">
+                <span class="tag border border-[#B8DC00]/30 px-4 py-1.5 rounded-full">Automação & Inteligência
+                    Artificial</span>
+            </div>
 
-                <!-- LEFT COLUMN: TEXT -->
-                <div
-                    class="w-full md:w-5/12 h-screen flex flex-col justify-center px-8 md:px-24 relative z-20 order-2 md:order-1 bg-gradient-to-t md:bg-gradient-to-r from-[#EAEAE5] via-[#EAEAE5]/80 to-transparent">
+            <h1 class="reveal text-4xl md:text-6xl font-black tracking-tight leading-[1.1] text-white mb-6"
+                style="transition-delay:0.1s">
+                Soluções de automações e inteligência artificial vão&nbsp;
+                <span style="color:#B8DC00">economizar tempo e dinheiro</span>
+                &nbsp;no seu negócio.
+            </h1>
 
-                    <div class="hero-text-anim opacity-0 translate-y-8">
-                        <span
-                            class="inline-block px-2 py-1 border border-stone-400 rounded-full text-[10px] uppercase font-mono tracking-widest text-stone-600 mb-6">
-                            Precision Series
-                        </span>
-                    </div>
+            <p class="reveal text-base md:text-lg text-secondary max-w-2xl mx-auto mb-10 leading-relaxed"
+                style="transition-delay:0.2s">
+                Tenha um novo "funcionário" digital trabalhando 24 horas por dia, 7 dias por semana, sem falhas.
+            </p>
 
-                    <h1
-                        class="font-display text-6xl md:text-8xl font-bold tracking-tighter leading-[0.9] mb-8 hero-text-anim opacity-0 translate-y-8">
-                        A caneta<br>
-                        <span class="text-outline">tecnológica</span><br>
-                        do mundo.
-                    </h1>
+            <div class="reveal flex flex-col sm:flex-row items-center justify-center gap-4"
+                style="transition-delay:0.3s">
+                <a href="#solucoes" class="btn-primary w-full sm:w-auto justify-center">
+                    Ver Soluções
+                    <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
+                </a>
+                <a href="#projetos" class="btn-ghost w-full sm:w-auto text-center">Ver Projetos</a>
+            </div>
+        </div>
+    </section>
 
-                    <p
-                        class="text-lg text-stone-600 max-w-md leading-relaxed font-light mb-12 hero-text-anim opacity-0 translate-y-8">
-                        A Artools redefine o equilíbrio entre peso, fluxo e design.
-                        Feita para criadores que exigem perfeição em cada traço.
-                    </p>
 
-                    <div class="flex items-center gap-4 hero-text-anim opacity-0 translate-y-8">
-                        <button class="btn-beam px-1 py-1 rounded-sm group overflow-hidden">
-                            <div
-                                class="btn-beam-content px-8 py-4 bg-stone-900 hover:bg-stone-800 transition-colors uppercase font-mono text-xs tracking-widest gap-2">
-                                Comprar Agora
-                                <iconify-icon icon="solar:cart-large-minimalistic-linear"
-                                    class="text-lg"></iconify-icon>
-                            </div>
-                        </button>
-
-                        <button
-                            class="px-6 py-4 border border-stone-300 hover:bg-white hover:border-stone-400 transition-all rounded-sm uppercase font-mono text-xs tracking-widest text-stone-600 flex items-center gap-2 group">
-                            Explorar
-                            <iconify-icon icon="solar:arrow-down-linear"
-                                class="text-lg group-hover:translate-y-1 transition-transform"></iconify-icon>
-                        </button>
-                    </div>
-
-                    <!-- PROGRESS INDICATOR MOBILE -->
-                    <div class="md:hidden mt-12 flex items-center gap-4 text-xs font-mono text-stone-400">
-                        <span>SCROLL TO EXPLORE</span>
-                        <div class="w-12 h-[1px] bg-stone-300"></div>
-                    </div>
+    <!-- =========================================================
+         MARQUEE
+    ========================================================= -->
+    <div class="marquee-wrap border-y border-[#1a1a1a] py-5 bg-[#080808]">
+        <div class="marquee-track">
+            <template x-for="i in 2">
+                <div class="flex items-center gap-0">
+                    <span class="text-4xl font-black tracking-tighter text-white/5 px-8">AUTOMAÇÃO</span>
+                    <span style="color:#B8DC00;font-size:1rem;padding:0 1rem">&#9679;</span>
+                    <span class="text-4xl font-black tracking-tighter text-white/10 px-8">INTELIGÊNCIA ARTIFICIAL</span>
+                    <span style="color:#B8DC00;font-size:1rem;padding:0 1rem">&#9679;</span>
+                    <span class="text-4xl font-black tracking-tighter text-white/5 px-8">AGENTES</span>
+                    <span style="color:#B8DC00;font-size:1rem;padding:0 1rem">&#9679;</span>
+                    <span class="text-4xl font-black tracking-tighter text-white/10 px-8">SISTEMAS SAAS</span>
+                    <span style="color:#B8DC00;font-size:1rem;padding:0 1rem">&#9679;</span>
+                    <span class="text-4xl font-black tracking-tighter text-white/5 px-8">n8n</span>
+                    <span style="color:#B8DC00;font-size:1rem;padding:0 1rem">&#9679;</span>
+                    <span class="text-4xl font-black tracking-tighter text-white/10 px-8">WHATSAPP API</span>
+                    <span style="color:#B8DC00;font-size:1rem;padding:0 1rem">&#9679;</span>
                 </div>
+            </template>
+        </div>
+    </div>
 
-                <!-- RIGHT COLUMN: VIDEO HERO -->
-                <div
-                    class="w-full md:w-7/12 h-[50vh] md:h-screen relative order-1 md:order-2 flex items-center justify-center bg-[#E6E6E1]">
 
-                    <!-- DECORATIVE ELEMENTS -->
-                    <div class="absolute inset-0 bg-grid opacity-30 pointer-events-none"></div>
-                    <div
-                        class="absolute top-[20%] right-[10%] w-[30vmax] h-[30vmax] bg-gradient-to-br from-white to-transparent rounded-full blur-3xl opacity-60">
-                    </div>
-
-                    <!-- VIDEO ELEMENT -->
-                    <!-- mix-blend-multiply helps video background blend if it's white -->
-                    <div class="relative w-full h-full md:w-[90%] md:h-[90%] flex items-center justify-center p-6">
-                        <video id="hero-video" src="assets/raw_files/video2.mp4" muted playsinline preload="auto"
-                            class="w-full h-full object-contain drop-shadow-2xl relative z-10 mix-blend-multiply"></video>
-                    </div>
-
-                    <!-- UI DETAILS (DESKTOP) -->
-                    <div class="hidden md:flex absolute bottom-12 right-12 items-end gap-8 z-20 mix-blend-multiply">
-                        <div class="flex flex-col gap-2 text-right">
-                            <div class="text-xs font-mono text-stone-400">STATUS</div>
-                            <div class="flex items-center gap-2 text-sm font-medium text-stone-600">
-                                <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-                                READY
-                            </div>
-                        </div>
-
-                        <div class="h-16 w-[1px] bg-stone-300"></div>
-
-                        <div class="flex flex-col gap-4">
-                            <span class="text-4xl font-display font-medium text-stone-300">01</span>
-                            <div class="flex gap-2 text-stone-400">
-                                <button class="hover:text-stone-900 transition-colors"><iconify-icon
-                                        icon="solar:arrow-left-linear" class="text-xl"></iconify-icon></button>
-                                <button class="hover:text-stone-900 transition-colors"><iconify-icon
-                                        icon="solar:arrow-right-linear" class="text-xl"></iconify-icon></button>
-                            </div>
-                        </div>
-                    </div>
+    <!-- =========================================================
+         SOLUÇÕES
+    ========================================================= -->
+    <section id="solucoes" class="py-24 px-6 bg-[#080808]">
+        <div class="max-w-6xl mx-auto">
+            <div class="section-label" data-aos="fade-up">Soluções</div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-black tracking-tight text-white leading-[1.15]"
+                        data-aos="fade-up">
+                        De automações simples até Sistemas Inteligentes.
+                    </h2>
+                </div>
+                <div class="flex items-end" data-aos="fade-up" data-aos-delay="80">
+                    <p class="text-sm text-secondary leading-relaxed">
+                        Milhares de empresas estão implementando estas soluções agora. Veja o que posso fazer pelo seu
+                        negócio.
+                    </p>
                 </div>
             </div>
 
-            <!-- SCROLL HINT OVERLAY -->
-            <div id="scroll-hint"
-                class="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 text-stone-400 text-xs font-mono uppercase tracking-widest animate-bounce hidden md:block">
-                Scroll to Explore
+            <!-- Services Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-12">
+
+                <!-- Card: Agentes de Atendimento -->
+                <div class="card p-7" data-aos="fade-up">
+                    <div class="w-10 h-10 rounded-2xl bg-white/5 flex items-center justify-center mb-5">
+                        <iconify-icon icon="solar:chat-round-dots-bold-duotone" class="text-xl"
+                            style="color:#B8DC00"></iconify-icon>
+                    </div>
+                    <h3 class="text-base font-bold text-white mb-2">Agentes de Atendimento</h3>
+                    <p class="text-sm text-secondary leading-relaxed">Atendimento 24h no WhatsApp, sem precisar de
+                        atendente humano.</p>
+                </div>
+
+                <!-- Card: Captura de Leads -->
+                <div class="card p-7" data-aos="fade-up" data-aos-delay="60">
+                    <div class="w-10 h-10 rounded-2xl bg-white/5 flex items-center justify-center mb-5">
+                        <iconify-icon icon="solar:user-check-bold-duotone" class="text-xl"
+                            style="color:#B8DC00"></iconify-icon>
+                    </div>
+                    <h3 class="text-base font-bold text-white mb-2">Captura de Leads</h3>
+                    <p class="text-sm text-secondary leading-relaxed">Qualificação automática de clientes e nutrição de
+                        funil.</p>
+                </div>
+
+                <!-- Card: Gestão de CRM -->
+                <div class="card p-7" data-aos="fade-up" data-aos-delay="120">
+                    <div class="w-10 h-10 rounded-2xl bg-white/5 flex items-center justify-center mb-5">
+                        <iconify-icon icon="solar:database-bold-duotone" class="text-xl"
+                            style="color:#B8DC00"></iconify-icon>
+                    </div>
+                    <h3 class="text-base font-bold text-white mb-2">Gestão Automática de CRM</h3>
+                    <p class="text-sm text-secondary leading-relaxed">Atualização de status sem intervenção manual.</p>
+                </div>
+
+                <!-- Card: Onboard Inteligente -->
+                <div class="card p-7" data-aos="fade-up" data-aos-delay="60">
+                    <div class="w-10 h-10 rounded-2xl bg-white/5 flex items-center justify-center mb-5">
+                        <iconify-icon icon="solar:hand-stars-bold-duotone" class="text-xl"
+                            style="color:#B8DC00"></iconify-icon>
+                    </div>
+                    <h3 class="text-base font-bold text-white mb-2">Onboard Inteligente</h3>
+                    <p class="text-sm text-secondary leading-relaxed">Gestão de novos clientes e boas-vindas
+                        automatizadas.</p>
+                </div>
+
+                <!-- Card: Secretária Inteligente -->
+                <div class="card p-7" data-aos="fade-up" data-aos-delay="120">
+                    <div class="w-10 h-10 rounded-2xl bg-white/5 flex items-center justify-center mb-5">
+                        <iconify-icon icon="solar:calendar-bold-duotone" class="text-xl"
+                            style="color:#B8DC00"></iconify-icon>
+                    </div>
+                    <h3 class="text-base font-bold text-white mb-2">Secretária Inteligente</h3>
+                    <p class="text-sm text-secondary leading-relaxed">Assistente pessoal no Telegram ou WhatsApp.</p>
+                </div>
+
+                <!-- Card: Sistemas Próprios -->
+                <div class="card p-7" data-aos="fade-up" data-aos-delay="180">
+                    <div class="w-10 h-10 rounded-2xl bg-white/5 flex items-center justify-center mb-5">
+                        <iconify-icon icon="solar:code-bold-duotone" class="text-xl"
+                            style="color:#B8DC00"></iconify-icon>
+                    </div>
+                    <h3 class="text-base font-bold text-white mb-2">Sistemas Próprios</h3>
+                    <p class="text-sm text-secondary leading-relaxed">Criação de SaaS e ferramentas internas para o seu
+                        negócio.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================================
+         NICHOS
+    ========================================================= -->
+    <section class="py-20 px-6 bg-surface border-t border-[#1a1a1a]">
+        <div class="max-w-6xl mx-auto">
+            <div class="section-label" data-aos="fade-up">Para quem é?</div>
+            <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mb-12" data-aos="fade-up">
+                Soluções personalizadas para o seu modelo de negócio.
+            </h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+                <!-- Infoprodutores -->
+                <div class="card p-6" data-aos="fade-up">
+                    <span class="tag block mb-4">Infoprodutores</span>
+                    <ul class="space-y-2.5 text-sm text-secondary">
+                        <li class="flex items-start gap-2"><span class="accent-dot mt-1.5"></span>Recuperação de Vendas
+                        </li>
+                        <li class="flex items-start gap-2"><span class="accent-dot mt-1.5"></span>Suporte com IA</li>
+                        <li class="flex items-start gap-2"><span class="accent-dot mt-1.5"></span>Gestão de Lançamentos
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Prestadores -->
+                <div class="card p-6" data-aos="fade-up" data-aos-delay="60">
+                    <span class="tag block mb-4">Prestadores de Serviços</span>
+                    <ul class="space-y-2.5 text-sm text-secondary">
+                        <li class="flex items-start gap-2"><span class="accent-dot mt-1.5"></span>Agendamento Automático
+                        </li>
+                        <li class="flex items-start gap-2"><span class="accent-dot mt-1.5"></span>Lembretes</li>
+                        <li class="flex items-start gap-2"><span class="accent-dot mt-1.5"></span>Triagem</li>
+                    </ul>
+                </div>
+
+                <!-- Negócios Locais -->
+                <div class="card p-6" data-aos="fade-up" data-aos-delay="120">
+                    <span class="tag block mb-4">Negócios Locais</span>
+                    <ul class="space-y-2.5 text-sm text-secondary">
+                        <li class="flex items-start gap-2"><span class="accent-dot mt-1.5"></span>Gestão de Avaliações
+                            Google</li>
+                        <li class="flex items-start gap-2"><span class="accent-dot mt-1.5"></span>Cardápio Digital</li>
+                        <li class="flex items-start gap-2"><span class="accent-dot mt-1.5"></span>FAQ Automático</li>
+                    </ul>
+                </div>
+
+                <!-- Profissionais -->
+                <div class="card p-6" data-aos="fade-up" data-aos-delay="180">
+                    <span class="tag block mb-4">Profissionais Diversos</span>
+                    <ul class="space-y-2.5 text-sm text-secondary">
+                        <li class="flex items-start gap-2"><span class="accent-dot mt-1.5"></span>Secretária no Telegram
+                        </li>
+                        <li class="flex items-start gap-2"><span class="accent-dot mt-1.5"></span>Monitoramento de
+                            Notícias</li>
+                        <li class="flex items-start gap-2"><span class="accent-dot mt-1.5"></span>Automação de Faturas
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================================
+         SOBRE / BIO
+    ========================================================= -->
+    <section id="sobre" class="py-24 px-6 bg-[#080808] border-t border-[#1a1a1a]">
+        <div class="max-w-6xl mx-auto">
+            <div class="section-label" data-aos="fade-up">Quem sou eu</div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+                <!-- Photo -->
+                <div class="lg:col-span-4" data-aos="zoom-in">
+                    <div class="relative">
+                        <div class="aspect-square rounded-3xl overflow-hidden bg-elevated">
+                            <img src="images/profile/Foto Celio.jpeg" alt="Célio Gomes"
+                                class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                        </div>
+                        <!-- Floating badge -->
+                        <div
+                            class="absolute -bottom-5 -right-5 bg-[#B8DC00] text-black rounded-2xl px-5 py-3 shadow-xl hidden md:block">
+                            <div class="text-xs font-black uppercase tracking-widest">Fundador</div>
+                            <div class="text-lg font-black leading-tight">Célio Gomes</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text -->
+                <div class="lg:col-span-8" data-aos="fade-left">
+                    <h2 class="text-3xl md:text-4xl font-black tracking-tight text-white mb-6 leading-tight">
+                        Quem é o Célio Gomes
+                    </h2>
+
+                    <div class="space-y-4 text-sm text-secondary leading-relaxed border-l-2 border-[#B8DC00]/25 pl-6">
+                        <p>Desenvolvedor de sistemas, formado em Sistemas de Informação, com grande experiência no
+                            desenvolvimento de soluções tecnológicas voltadas para ambientes desktop, web e mobile.</p>
+                        <p>Ao longo da minha trajetória profissional, atuei no planejamento, desenvolvimento e
+                            manutenção de sistemas robustos, sempre com foco em eficiência, escalabilidade e alinhamento
+                            às necessidades reais do negócio.</p>
+                        <p>Com vivência na criação de sistemas administrativos, financeiros, comerciais e operacionais —
+                            incluindo controle de estoque, contas a pagar e receber, PDV, delivery, relatórios
+                            gerenciais e integrações entre sistemas.</p>
+                        <p>Nos últimos meses, direcionei minha carreira para o desenvolvimento de automações
+                            inteligentes, utilizando n8n, Manychat, plataformas cloud e a API oficial do WhatsApp da
+                            Meta.</p>
+                        <p>Atualmente, estou em processo contínuo de especialização em sistemas com Inteligência
+                            Artificial, aplicando agentes inteligentes, automação orientada por IA e integração de
+                            modelos de linguagem a sistemas corporativos.</p>
+                    </div>
+
+                    <!-- Techs -->
+                    <div class="mt-8 pt-6 border-t border-[#1e1e1e]">
+                        <span
+                            class="text-xs text-muted uppercase tracking-widest font-bold mb-4 block">Tecnologias</span>
+                        <div class="flex flex-wrap gap-2">
+                            <template
+                                x-for="tech in ['n8n','OpenAI','Manychat','Supabase','React','TypeScript','V0','Cursor']">
+                                <span
+                                    class="text-xs font-mono font-semibold px-3 py-1.5 rounded-lg bg-elevated border border-[#242424] text-secondary"
+                                    x-text="tech"></span>
+                            </template>
+                        </div>
+                    </div>
+
+                    <a href="https://wa.me/5531982964066" target="_blank" class="btn-primary mt-8 inline-flex">
+                        <iconify-icon icon="logos:whatsapp-icon" class="text-black"></iconify-icon>
+                        Falar no WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================================
+         PROJETOS / PORTFÓLIO
+    ========================================================= -->
+    <section id="projetos" class="py-24 px-6 bg-surface border-t border-[#1a1a1a]" x-data="{
+            filter: 'Todos',
+            projects: [
+                {
+                    id:1, name:'Memodonto', category:'SaaS', tags:['EdTech','Supabase'],
+                    desc:'Plataforma EdTech com flashcards gamificados para estudantes de odontologia.',
+                    images:['images/portfolio/Memodonto - capa.png','images/portfolio/Meme 01.png','images/portfolio/Meme 02.png','images/portfolio/Meme 03.png']
+                },
+                {
+                    id:2, name:'Dr. no Trânsito', category:'Agente IA', tags:['n8n','WhatsApp API'],
+                    desc:'Agente de WhatsApp para triagem médica emergencial em tempo real.',
+                    images:['images/portfolio/Dr no transito.png','images/portfolio/No transito whats.png']
+                },
+                {
+                    id:3, name:'Thay IA', category:'Agente IA', tags:['GPT-4o','Turismo'],
+                    desc:'Guia de viagens com IA para itinerários personalizados.',
+                    images:['images/portfolio/Thay IA.png']
+                },
+                {
+                    id:4, name:'SecretárIA 2.0', category:'Automação', tags:['Manychat','Telegram'],
+                    desc:'Secretária digital com monitoramento de notícias e automações no Telegram.',
+                    images:['images/portfolio/SecretárIA.png']
+                },
+                {
+                    id:5, name:'Leve+ ERP', category:'SaaS', tags:['React','Varejo'],
+                    desc:'Sistema ERP voltado para varejo inteligente.',
+                    images:['images/portfolio/Leve + 01.png','images/portfolio/Leve mais 02.png']
+                },
+                {
+                    id:6, name:'Agente Desk', category:'Automação', tags:['Node.js','Atendimento'],
+                    desc:'Automação de atendimento com redução drástica de overhead operacional.',
+                    images:['images/portfolio/Agente de atendimento.png']
+                }
+            ],
+            openProject(p) {
+                this.selectedProject = p;
+                this.modalOpen = true;
+                this.$nextTick(() => {
+                    new Swiper('#modal-swiper', {
+                        pagination: { el: '.swiper-pagination', clickable: true },
+                        loop: p.images.length > 1
+                    });
+                });
+            }
+        }">
+        <div class="max-w-6xl mx-auto">
+            <div class="section-label" data-aos="fade-up">Casos de Sucesso</div>
+
+            <div class="flex flex-col md:flex-row justify-between items-end gap-8 mb-12">
+                <h2 class="text-3xl md:text-4xl font-black tracking-tight text-white" data-aos="fade-up">Projetos
+                    Entregues.</h2>
+
+                <!-- Filter -->
+                <div class="flex gap-2 p-1.5 rounded-full border border-[#242424] bg-[#0F0F0F]" data-aos="fade-up">
+                    <template x-for="cat in ['Todos','SaaS','Agente IA','Automação']">
+                        <button @click="filter = cat" :class="filter===cat ? 'bg-[#B8DC00] text-black' : 'text-muted'"
+                            class="px-5 py-2.5 rounded-full text-[0.65rem] font-bold uppercase tracking-widest transition-all"
+                            x-text="cat">
+                        </button>
+                    </template>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <template x-for="p in projects" :key="p.id">
+                    <div x-show="filter==='Todos' || p.category===filter" @click="openProject(p)"
+                        class="card p-0 overflow-hidden cursor-pointer group" data-aos="fade-up">
+                        <div class="aspect-video overflow-hidden relative">
+                            <img :src="p.images[0]" :alt="p.name"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
+                            </div>
+                            <div class="absolute bottom-5 left-5">
+                                <span class="tag block mb-0.5" x-text="p.category"></span>
+                                <h4 class="text-base font-bold text-white" x-text="p.name"></h4>
+                            </div>
+                        </div>
+                    </div>
+                </template>
             </div>
         </div>
 
-        <!-- SPACER FOR NEXT CONTENT (Simulated) -->
-        <section class="h-[50vh] bg-stone-100 flex items-center justify-center border-t border-stone-200">
-            <p class="text-stone-400 font-mono text-sm uppercase tracking-widest">More content below...</p>
-        </section>
+        <!-- Modal -->
+        <div x-show="modalOpen" class="fixed inset-0 z-[200] flex items-center justify-center" x-cloak>
+            <div @click="modalOpen=false" class="absolute inset-0 bg-black/90 backdrop-blur-sm"></div>
 
-    </main>
+            <div class="relative z-10 w-full h-full md:w-[92%] md:h-[90%] bg-[#0A0A0A] rounded-none md:rounded-3xl border border-[#242424] overflow-y-auto flex flex-col lg:flex-row"
+                x-show="modalOpen" x-transition:enter="transition duration-300"
+                x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100">
+
+                <button @click="modalOpen=false"
+                    class="absolute top-6 right-6 z-10 w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition">
+                    <iconify-icon icon="solar:close-square-bold" class="text-white text-lg"></iconify-icon>
+                </button>
+
+                <template x-if="selectedProject">
+                    <div class="flex flex-col lg:flex-row w-full h-full">
+                        <!-- Carousel -->
+                        <div class="lg:w-3/5 h-72 lg:h-full bg-elevated relative overflow-hidden flex-shrink-0">
+                            <div id="modal-swiper" class="swiper w-full h-full">
+                                <div class="swiper-wrapper">
+                                    <template x-for="img in selectedProject.images">
+                                        <div class="swiper-slide flex items-center justify-center p-8">
+                                            <img :src="img"
+                                                class="max-w-full max-h-full object-contain rounded-xl shadow-xl">
+                                        </div>
+                                    </template>
+                                </div>
+                                <div class="swiper-pagination pb-2"></div>
+                            </div>
+                        </div>
+
+                        <!-- Info -->
+                        <div class="lg:w-2/5 p-8 md:p-12 flex flex-col justify-center gap-8">
+                            <div>
+                                <span class="tag block mb-3" x-text="selectedProject.category"></span>
+                                <h3 class="text-3xl font-black text-white mb-4" x-text="selectedProject.name"></h3>
+                                <p class="text-sm text-secondary leading-relaxed" x-text="selectedProject.desc"></p>
+                            </div>
+
+                            <div class="pt-6 border-t border-[#1e1e1e] space-y-5">
+                                <div>
+                                    <span
+                                        class="text-xs text-muted uppercase tracking-widest font-bold block mb-2">Stack</span>
+                                    <div class="flex flex-wrap gap-2">
+                                        <template x-for="t in selectedProject.tags">
+                                            <span
+                                                class="text-xs font-mono px-3 py-1 rounded-lg bg-[#181818] border border-[#242424] text-secondary"
+                                                x-text="t"></span>
+                                        </template>
+                                    </div>
+                                </div>
+
+                                <a href="https://wa.me/5531982964066?text=Ol%C3%A1%20C%C3%A9lio%2C%20quero%20um%20projeto%20similar"
+                                    class="btn-primary justify-center w-full text-center">
+                                    Quero um projeto similar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================================
+         CTA / FINAL
+    ========================================================= -->
+    <section class="py-28 px-6 bg-[#080808] border-t border-[#1a1a1a] text-center relative overflow-hidden">
+        <div
+            class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(184,220,0,0.04),transparent_55%)] pointer-events-none">
+        </div>
+        <div class="max-w-2xl mx-auto relative z-10">
+            <iconify-icon icon="solar:stars-bold-duotone" class="text-5xl mb-6 block"
+                style="color:#B8DC00;animation:float 5s ease-in-out infinite"></iconify-icon>
+            <h2 class="text-3xl md:text-5xl font-black tracking-tight text-white mb-4 leading-[1.15]">
+                Pronto para escalar seu negócio?
+            </h2>
+            <p class="text-sm text-secondary mb-10 leading-relaxed">
+                Agende uma consultoria gratuita e descubra como automações e IA podem transformar a sua operação.
+            </p>
+            <a href="https://wa.me/5531982964066?text=Ol%C3%A1%20C%C3%A9lio%2C%20quero%20agendar%20uma%20consultoria%20gratuita"
+                target="_blank" class="btn-primary text-base px-10 py-4">
+                <iconify-icon icon="logos:whatsapp-icon" class="text-black text-xl"></iconify-icon>
+                Agendar Consultoria Gratuita
+            </a>
+        </div>
+    </section>
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================= -->
+    <footer class="py-10 px-6 border-t border-[#141414]">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-2.5">
+                <div class="w-6 h-6 rounded-full bg-[#B8DC00] flex items-center justify-center">
+                    <iconify-icon icon="solar:atom-bold-duotone" class="text-black text-xs"></iconify-icon>
+                </div>
+                <span class="font-bold text-sm text-white tracking-tight">Agenc<span
+                        style="color:#B8DC00">.IA</span></span>
+            </div>
+
+            <div class="flex gap-8 text-xs font-semibold text-muted uppercase tracking-widest">
+                <a href="#solucoes" class="hover:text-white transition-colors">Soluções</a>
+                <a href="#sobre" class="hover:text-white transition-colors">Sobre</a>
+                <a href="#projetos" class="hover:text-white transition-colors">Projetos</a>
+            </div>
+
+            <span class="text-xs font-mono text-muted">© 2026 Agenc.IA • Belo Horizonte / MG</span>
+        </div>
+    </footer>
+
+
+    <!-- FAB WhatsApp -->
+    <a href="https://wa.me/5531982964066?text=Ol%C3%A1%20C%C3%A9lio%2C%20vim%20pelo%20site%20e%20gostaria%20de%20conversar."
+        target="_blank"
+        class="fixed bottom-8 right-8 z-[500] w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-[0_8px_32px_rgba(184,220,0,0.2)] hover:scale-110 transition-transform"
+        style="background:#B8DC00">
+        <iconify-icon icon="logos:whatsapp-icon" style="color:#000"></iconify-icon>
+    </a>
+
 
     <script>
-        document.addEventListener("DOMContentLoaded", (event) => {
-            gsap.registerPlugin(ScrollTrigger);
+        AOS.init({ duration: 800, once: true, offset: 60 });
 
-            const video = document.querySelector("#hero-video");
-            let isInitialized = false;
-
-            // 1. Initial Animations (Fade In)
-            const tlInit = gsap.timeline({ defaults: { ease: "power3.out", duration: 1.2 } });
-
-            tlInit.to(".hero-text-anim", {
-                y: 0,
-                opacity: 1,
-                stagger: 0.1,
-                delay: 0.2
-            })
-                .fromTo(video,
-                    { scale: 0.9, opacity: 0, y: 20 },
-                    { scale: 1, opacity: 1, y: 0, duration: 1.5, ease: "expo.out" },
-                    "-=1"
-                );
-
-            // 2. Video Scrub Logic
-            let videoDuration = 0;
-
-            function initScrollScrub() {
-                if (isInitialized) return;
-
-                // PREFERS-REDUCED-MOTION CHECK
-                const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-                if (prefersReducedMotion) {
-                    video.play();
-                    video.loop = true;
-                    isInitialized = true;
-                    return;
-                }
-
-                // CHECK DURATION VALIDITY
-                if (!video.duration) {
-                    if (video.readyState < 1) return;
-                    // Fallback for rare cases where duration is NaN
-                    if (isNaN(video.duration)) videoDuration = 5;
-                    else videoDuration = video.duration;
-                } else {
-                    videoDuration = video.duration;
-                }
-
-                isInitialized = true;
-                video.currentTime = 0;
-
-                // GSAP TIMELINE TIED TO SCROLL
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: "#hero-trigger",
-                        start: "top top",
-                        end: "bottom bottom",
-                        scrub: 0.5, // 0.5s lag for smooth physics
-                        markers: false
-                    }
-                })
-                    .fromTo(video,
-                        { currentTime: 0 },
-                        { currentTime: videoDuration, ease: "none" }
-                    );
-
-                // TEXT PARALLAX
-                gsap.to("h1", {
-                    y: -50,
-                    scrollTrigger: {
-                        trigger: "#hero-trigger",
-                        start: "top top",
-                        end: "bottom center",
-                        scrub: true
-                    }
-                });
-            }
-
-            // --- INITIALIZATION HANDLERS ---
-            if (video.readyState >= 1) {
-                initScrollScrub();
-            }
-            video.addEventListener('loadedmetadata', initScrollScrub);
-
-            // Fallback timeout just in case metadata hangs
-            setTimeout(() => {
-                if (!isInitialized) {
-                    initScrollScrub();
-                }
-            }, 1000);
-
-            // BACKGROUND GRID PARALLAX
-            gsap.to(".bg-grid", {
-                backgroundPosition: "0px 100px",
-                ease: "none",
-                scrollTrigger: {
-                    trigger: "#hero-trigger",
-                    start: "top top",
-                    end: "bottom bottom",
-                    scrub: true
+        // Simple scroll reveal
+        const revealEls = document.querySelectorAll('.reveal');
+        function onScroll() {
+            revealEls.forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight * 0.92) {
+                    el.classList.add('visible');
                 }
             });
-        });
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
     </script>
 </body>
 
