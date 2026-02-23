@@ -5,6 +5,7 @@
 
 # Design system drafts & assets backup
 assets/
+assets/templates/
 
 # Editor
 .vscode/
